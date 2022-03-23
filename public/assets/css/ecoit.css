@@ -1,0 +1,131 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif, Arial, "Helvetica Neue", Helvetica, sans-serif;
+    background: #f1f1f1;
+}
+
+
+/***** NAVBAR *****/
+header {
+    background-color: #333;
+    color: #f1f1f1;
+    width: 100vw;
+    height: 8vh;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    position: absolute;
+    margin-left: 50px;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #f1f1f1;
+}
+
+.navbar {
+    position: absolute; 
+    right: 100px;
+    display: flex;
+    margin-right: 20px;
+}
+
+.navbar-menu-block {
+    margin-left: 40px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #f1f1f1;
+    text-transform: uppercase;
+}
+
+.navbar a::after {
+    content: '';
+    display: block;
+    width: 0px;
+    margin: 5px auto 0 auto;
+    height: 2px;
+    border-radius: 2px;
+    background: #aaa;
+    transition: all 0.2s ease-out;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+
+
+/***** MAIN *****/
+
+main {
+    background-color: #f1f1f1;
+    height: 85vh;
+}
+
+h1 {
+    font-family: 'Abril Fatface', sans-serif;
+    padding-top: 150px;
+    margin-left: 60px;
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+h1.title-center {
+    text-align: center;
+    padding-top: 0;
+    margin-left: 0;
+}
+
+p {
+    margin-left: 60px;
+    font-size: 20px;
+}
+
+.btn-home {
+    display: block;
+    margin: 10px 0 0 60px;
+    width: 180px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #333;
+    border-radius: 3px;
+    cursor: pointer;    
+}
+
+.btn-home:hover {
+    background-color: #333;
+    color: #f1f1f1;
+}
+
+.form {
+    margin: 0 50px;
+}
+
+/***** FOOTER *****/
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7vh;
+}
+
