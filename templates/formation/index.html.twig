@@ -4,4 +4,15 @@
 
 {% block content %}
     <h1 class="title-center">Nos Formations</h1>
+    <div class="row m-4">
+        {% for formation in formations %}
+            <div class="col-md-4">
+                <div class="formation-item">
+                    <h2>{{ formation.title }}</h2>
+                    image
+                    texte accroche
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
