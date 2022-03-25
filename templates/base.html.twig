@@ -26,16 +26,29 @@
                 </span>
             </div>
             {% if app.user %}
-            <div class="navbar-menu-block">
-                <span class="navbar-menu-item">
-                    <a href="{{ path('app_account') }}">Mon compte</a>
-                </span>
-            </div>
-            <div class="navbar-menu-block">
-                <span class="navbar-menu-item">
-                    <a href="{{ path('app_logout') }}">Deconnexion</a>
-                </span>
-            </div>
+                {% if app.user.roles is same as (['ROLE_LEARN']) %}
+                <div class="navbar-menu-block">
+                    <span class="navbar-menu-item">
+                        <a href="{{ path('app_account') }}">Mon compte</a>
+                    </span>
+                </div>
+                <div class="navbar-menu-block">
+                    <span class="navbar-menu-item">
+                        <a href="{{ path('app_logout') }}">Deconnexion</a>
+                    </span>
+                </div>
+                {% else %}
+                <div class="navbar-menu-block">
+                    <span class="navbar-menu-item">
+                        <a href="{{ path('admin') }}">Mon espace</a>
+                    </span>
+                </div>
+                <div class="navbar-menu-block">
+                    <span class="navbar-menu-item">
+                        <a href="{{ path('app_logout') }}">Deconnexion</a>
+                    </span>
+                </div>
+                {% endif %}
             {% else %}            
             <div class="navbar-menu-block">
                 <span class="navbar-menu-item">
