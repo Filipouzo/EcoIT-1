@@ -4,13 +4,28 @@
 
 {% block content %}
     <h1 class="title-center">Nos Formations</h1>
-    <div class="row m-4">
+    <div class="row justify-content-md-center m-4">
         {% for formation in formations %}
-            <div class="col-md-4">
-                <div class="formation-item">
-                    <h2>{{ formation.title }}</h2>
-                    image
-                    texte accroche
+            <div class="col-md-4 formation-list">
+                <div class="text-center">
+                    <div class="formation-img">
+                        <img src="/assets/images/{{ formation.image }}" class="img-fluid" alt="{{ formation.title }}">
+                    </div>
+                    <h2 class="formation-title">{{ formation.title }}</h2>                    
+                    <div class="m-3 formation-description">{{ formation.description }}</div>
+                    <a href="" class="btn-formation float-end m-2">Suivre cette formation</a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for formation in formations %}
+            <div class="col-md-4 formation-list">
+                <div class="text-center">
+                    <div class="formation-img">
+                        <img src="/assets/images/{{ formation.image }}" class="img-fluid" alt="{{ formation.title }}">
+                    </div>
+                    <h2 class="formation-title">{{ formation.title }}</h2>                    
+                    <div class="m-3 formation-description">{{ formation.description }}</div>
+                    <a href="" class="btn-formation float-end m-2">Suivre cette formation</a>
                 </div>
             </div>
         {% endfor %}
