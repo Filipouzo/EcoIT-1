@@ -13,7 +13,7 @@
                     </div>
                     <h2 class="formation-title">{{ formation.title }}</h2>                    
                     <div class="m-3 formation-description">{{ formation.description }}</div>
-                    <a href="" class="btn-formation float-end m-2">Suivre cette formation</a>
+                    <a href="{{ path('formation', { 'slug': formation.slug }) }}" class="btn-formation float-end m-2">Suivre cette formation</a>
                 </div>
             </div>
         {% endfor %}

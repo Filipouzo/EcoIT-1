@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ formation.title }} - EcoIT{% endblock %}
+
+{% block content %}
+    <h1 class="title-center">{{ formation.title }}</h1>
+    
+    <div class="row">
+        <div class="col-4">
+        {{ formation.title }}
+        {{ section.title }}        
+        {% for lesson in lessons %}
+            {{ dump(lesson.title) }}
+        {% endfor %}
+        </div>
+        <div class="col-8">
+        
+        </div>
+    </div>
+{% endblock %}
