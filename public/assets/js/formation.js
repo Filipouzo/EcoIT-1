@@ -1,13 +1,13 @@
 window.onload = () => {
-
+    
     function onClickBtnCheck(event) {
         event.preventDefault();
         
         const url = this.href;
+        const id = this.id;
+    
+        const icon = document.querySelector('img.check'+id);
         
-        const icon = document.querySelector('img.icon-lesson');
-        
-
         fetch(url)
             .then(response => response.json())
             .then(data => icon.src = data.src);
@@ -21,24 +21,21 @@ window.onload = () => {
         event.preventDefault();
         
         const url = this.href;
-        const p = document.querySelector('p.test');
-        const pp = document.querySelector('p.test1');
+        const title = document.querySelector('p.title');
+        const explanation = document.querySelector('p.explanation');
         const video = document.querySelector('div.video');
     
         fetch(url)
             .then(response => response.json())
             .then(function(data) {
-                p.textContent = data.lessonTitle;
-                pp.textContent = data.lessonExplanation;
+                title.textContent = data.lessonTitle;
                 video.innerHTML = data.lessonVideo;
+                explanation.textContent = data.lessonExplanation;
             });
     }
 
     document.querySelectorAll('a.watch').forEach(function(link) {
         link.addEventListener('click', onClickBtnWatch);
     })
-
-    
-
 
 }

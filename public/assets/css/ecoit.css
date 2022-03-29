@@ -196,6 +196,14 @@ li a:hover {
     color: #333;
 }
 
+p.explanation {
+    margin-left: 0;
+}
+
+p.title {
+    margin-left: 0;
+}
+
 /***** FOOTER *****/
 footer {
     position: absolute;

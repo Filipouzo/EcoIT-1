@@ -7,34 +7,29 @@
     
     <div class="row">
         <div class="col-4">
-        <ul>
-            <li><h2>{{ formation.title }}</h2></li>
-            <li><h3>{{ section.title }}</h3></li>    
-            {% for lesson in lessons %}   
-                <li>         
-                    <a href="{{ path('lesson_check', { 'slug': formation.slug, 'id' : lesson.id }) }}" class="js-check">
-                    {% if app.user and lesson.isCheckedByUser(app.user) %}
-                        <img class="check icon-lesson" src="{{ asset('assets/images/check.png') }}" alt="check">
-                    {% else %}
-                        <img class="not-check icon-lesson" src="{{ asset('assets/images/not-check.png') }}" alt="not-check">
-                    {% endif %}
-                    </a>
-                    <a class="watch" href="{{ path('lesson_watch', { 'slug': formation.slug, 'id' : lesson.id }) }}">
-                        {{ lesson.title }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+            <ul>
+                <li><h2>{{ formation.title }}</h2></li>
+                <li><h3>{{ section.title }}</h3></li>    
+                {% for lesson in lessons %}   
+                    <li>         
+                        <a id="{{ lesson.id }}" href="{{ path('lesson_check', { 'slug': formation.slug, 'id' : lesson.id }) }}" class="js-check">
+                        {% if app.user and lesson.isCheckedByUser(app.user) %}
+                            <img class="check{{ lesson.id }} icon-lesson" src="{{ asset('assets/images/check.png') }}" alt="check">
+                        {% else %}
+                            <img class="check{{ lesson.id }} icon-lesson" src="{{ asset('assets/images/not-check.png') }}" alt="not-check">
+                        {% endif %}
+                        </a>
+                        <a class="watch" href="{{ path('lesson_watch', { 'slug': formation.slug, 'id' : lesson.id }) }}">
+                            {{ lesson.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
         <div class="col-8">
-            <p class="test">
-            </p>
-            <p class="test1">
-            </p>
+            <p class="title"></p>
             <div class="video"></div>
-            <a href="#">
-            Valider la leçon
-            </a>
+            <p class="explanation"></p>
         </div>
     </div>
 {% endblock %}

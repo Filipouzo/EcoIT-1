@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Formation;
+use App\Entity\User;
 use App\Entity\Lesson;
 use App\Entity\LessonCheck;
 use App\Entity\Section;
@@ -35,6 +36,10 @@ class FormationController extends AbstractController
     #[Route('/suivre-formation/{slug}', name: 'formation')]
     public function show($slug): Response
     {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
         
         $formation = $this->entityManager->getRepository(Formation::class)->findOneBySlug($slug);
 
@@ -102,14 +107,12 @@ class FormationController extends AbstractController
     }
 
     #[Route('/suivre-formation/{slug}/{id}', name: 'lesson_watch')]
-    public function watch(Lesson $lesson, EntityManagerInterface $manager, LessonCheckRepository $checkRepository) : Response {
+    public function watch(Lesson $lesson) : Response {
         $title = $lesson->getTitle();
         return $this->json([
             'lessonTitle' => $lesson->getTitle(), 
             'lessonVideo' => $lesson->getVideo(),
             'lessonExplanation' => $lesson->getExplanation(),
-            'html' => "
-            <div>' .$title. '</div>"
         ], 200);
     }
 }
