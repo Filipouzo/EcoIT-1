@@ -70,15 +70,18 @@ class FormationController extends AbstractController
         if($lesson->isCheckedByUser($user)) {
             $checked = $checkRepository->findOneBy([
                 'lesson' => $lesson,
-                'user' =>$user
+                'user' => $user
             ]);
 
+            
             $manager->remove($checked);
             $manager->flush();
 
             return $this->json([
                 'message' => 'OKKKKKK',
-                'code' => 200
+                'code' => 200,
+                'checked' => false,
+                'src' => "/assets/images/not-check.png"
             ], 200);
         }
 
@@ -90,6 +93,23 @@ class FormationController extends AbstractController
         $manager->persist($checked);
         $manager->flush();
 
-        return $this->json(['message' => 'ca marche frére', 'code' => 200], 200);
+        return $this->json([
+            'message' => 'ca marche frére', 
+            'code' => 200,
+            'checked' => true,
+            'src' => "/assets/images/check.png"
+        ], 200);
+    }
+
+    #[Route('/suivre-formation/{slug}/{id}', name: 'lesson_watch')]
+    public function watch(Lesson $lesson, EntityManagerInterface $manager, LessonCheckRepository $checkRepository) : Response {
+        $title = $lesson->getTitle();
+        return $this->json([
+            'lessonTitle' => $lesson->getTitle(), 
+            'lessonVideo' => $lesson->getVideo(),
+            'lessonExplanation' => $lesson->getExplanation(),
+            'html' => "
+            <div>' .$title. '</div>"
+        ], 200);
     }
 }
