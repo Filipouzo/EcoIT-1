@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -39,6 +41,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $photo;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: LessonCheck::class)]
+    private $lessonChecks;
+
+    public function __construct()
+    {
+        $this->lessonChecks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,6 +176,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LessonCheck>
+     */
+    public function getLessonChecks(): Collection
+    {
+        return $this->lessonChecks;
+    }
+
+    public function addLessonCheck(LessonCheck $lessonCheck): self
+    {
+        if (!$this->lessonChecks->contains($lessonCheck)) {
+            $this->lessonChecks[] = $lessonCheck;
+            $lessonCheck->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLessonCheck(LessonCheck $lessonCheck): self
+    {
+        if ($this->lessonChecks->removeElement($lessonCheck)) {
+            // set the owning side to null (unless already changed)
+            if ($lessonCheck->getUser() === $this) {
+                $lessonCheck->setUser(null);
+            }
+        }
 
         return $this;
     }

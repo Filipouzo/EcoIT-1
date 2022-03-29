@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\LessonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
 class Lesson
@@ -25,6 +28,14 @@ class Lesson
     #[ORM\ManyToOne(targetEntity: Section::class, inversedBy: 'lessons')]
     #[ORM\JoinColumn(nullable: false)]
     private $section;
+
+    #[ORM\OneToMany(mappedBy: 'lesson', targetEntity: LessonCheck::class)]
+    private $lessonChecks;
+
+    public function __construct()
+    {
+        $this->lessonChecks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,5 +88,47 @@ class Lesson
         $this->section = $section;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, LessonCheck>
+     */
+    public function getLessonChecks(): Collection
+    {
+        return $this->lessonChecks;
+    }
+
+    public function addLessonCheck(LessonCheck $lessonCheck): self
+    {
+        if (!$this->lessonChecks->contains($lessonCheck)) {
+            $this->lessonChecks[] = $lessonCheck;
+            $lessonCheck->setLesson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLessonCheck(LessonCheck $lessonCheck): self
+    {
+        if ($this->lessonChecks->removeElement($lessonCheck)) {
+            // set the owning side to null (unless already changed)
+            if ($lessonCheck->getLesson() === $this) {
+                $lessonCheck->setLesson(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+    * Know if user check a lesson
+    */
+    public function isCheckedByUser(User $user) : bool {
+        foreach($this->lessonChecks as $lessonCheck) {            
+            if($lessonCheck->getUser() === $user && $lessonCheck->getChecked()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

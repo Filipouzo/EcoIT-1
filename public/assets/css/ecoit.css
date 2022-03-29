@@ -175,6 +175,27 @@ img {
     align-items: center;
 }
 
+img.icon-lesson {
+    height: 24px;
+    width: auto;
+}
+
+ul {
+    list-style: none;
+    font-style: italic;
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li a:hover {
+    font-style: normal;
+    text-transform: uppercase;
+    color: #333;
+}
+
 /***** FOOTER *****/
 footer {
     position: absolute;

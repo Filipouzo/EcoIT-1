@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Formation;
 use App\Entity\Lesson;
+use App\Entity\LessonCheck;
 use App\Entity\Section;
+use App\Repository\LessonCheckRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,5 +55,41 @@ class FormationController extends AbstractController
             'section' => $section,
             'lessons' => $lessons,
         ]);
+    }
+
+    #[Route('/suivre-formation/{slug}/{id}/check', name: 'lesson_check')]
+    public function check(Lesson $lesson, EntityManagerInterface $manager, LessonCheckRepository $checkRepository) : Response {
+        
+        $user = $this->getUser();
+
+        if(!$user) return $this->json([
+            'message' => 'NOOOOOOO', 
+            'code' => 403
+        ], 403);
+
+        if($lesson->isCheckedByUser($user)) {
+            $checked = $checkRepository->findOneBy([
+                'lesson' => $lesson,
+                'user' =>$user
+            ]);
+
+            $manager->remove($checked);
+            $manager->flush();
+
+            return $this->json([
+                'message' => 'OKKKKKK',
+                'code' => 200
+            ], 200);
+        }
+
+        $checked = new LessonCheck();
+        $checked->setLesson($lesson)
+                ->setChecked(true)
+                ->setUser($user);
+
+        $manager->persist($checked);
+        $manager->flush();
+
+        return $this->json(['message' => 'ca marche frére', 'code' => 200], 200);
     }
 }
