@@ -45,22 +45,21 @@ class FormationRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Formation[] Returns an array of Formation objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Formation[] Returns an array of Formation objects
+    */
+    
+    public function findBykeyUp($keyup)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('f')
+            ->andWhere('f.title IN (:title)')
+            ->setParameter('title', "%{$keyup}%")
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Formation

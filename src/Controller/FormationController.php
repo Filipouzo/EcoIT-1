@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Formation;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
 use App\Entity\Lesson;
 use App\Entity\LessonCheck;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class FormationController extends AbstractController
 {
@@ -23,14 +25,27 @@ class FormationController extends AbstractController
     }
 
     #[Route('/formation', name: 'app_formation')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $formations = $this->entityManager->getRepository(Formation::class)->findAll();
-        // $formations = $this->entityManager->getRepository(Section::class)->findAll();
         
+        if ($request->get('ajax')) {
+            $keyup = $request->get('keyup');
+            $formations = $this->entityManager->getRepository(Formation::class)->findBykeyUp($keyup);
+            return $this->renderView('formation/index.html.twig', [
+                'formations' => $formations,
+            ]);
+            // return new JsonResponse([          
+            //     'title' => 'rrr', 
+            //     'image' => 'tttt',
+            //     'explanation' => 'rtrtrtr'
+            //     // 'content' => $this->renderView('formation/index.html.twig', compact('formations'))
+            // ]);
+        } else {        
         return $this->render('formation/index.html.twig', [
-            'formations' => $formations
+            'formations' => $formations,
         ]);
+        }
     }
 
     #[Route('/suivre-formation/{slug}', name: 'formation')]
@@ -83,7 +98,7 @@ class FormationController extends AbstractController
             $manager->flush();
 
             return $this->json([
-                'message' => 'OKKKKKK',
+                'message' => 'Remove',
                 'code' => 200,
                 'checked' => false,
                 'src' => "/assets/images/not-check.png"
@@ -99,7 +114,7 @@ class FormationController extends AbstractController
         $manager->flush();
 
         return $this->json([
-            'message' => 'ca marche frére', 
+            'message' => 'Ok', 
             'code' => 200,
             'checked' => true,
             'src' => "/assets/images/check.png"
@@ -108,7 +123,7 @@ class FormationController extends AbstractController
 
     #[Route('/suivre-formation/{slug}/{id}', name: 'lesson_watch')]
     public function watch(Lesson $lesson) : Response {
-        $title = $lesson->getTitle();
+        
         return $this->json([
             'lessonTitle' => $lesson->getTitle(), 
             'lessonVideo' => $lesson->getVideo(),

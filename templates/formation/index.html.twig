@@ -4,15 +4,28 @@
 
 {% block content %}
     <h1 class="title-center">Nos Formations</h1>
+    <div class="row justify-content-center text-center m-4">
+        <div class="col-12 col-md-4">
+            <form>
+                <input class="search" type="text" placeholder="Votre recherche">
+            </form>
+        </div>
+        <div class="col">
+            Formations en cours
+        </div>
+        <div class="col">
+            Formations terminée
+        </div>
+    </div>
     <div class="row justify-content-md-center m-4">
         {% for formation in formations %}
             <div class="col-md-4 formation-list">
                 <div class="text-center">
                     <div class="formation-img">
-                        <img src="/assets/images/{{ formation.image }}" class="img-fluid" alt="{{ formation.title }}">
+                        <img src="/assets/images/{{ formation.image }}" class="img-fluid search" alt="{{ formation.title }}">
                     </div>
-                    <h2 class="formation-title">{{ formation.title }}</h2>                    
-                    <div class="m-3 formation-description">{{ formation.description }}</div>
+                    <h2 class="formation-title search">{{ formation.title }}</h2>                    
+                    <div class="m-3 formation-description search">{{ formation.description }}</div>
                     <a href="{{ path('formation', { 'slug': formation.slug }) }}" class="btn-formation float-end m-2">Suivre cette formation</a>
                 </div>
             </div>
@@ -30,4 +43,7 @@
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('assets/js/formation.js') }}"></script>
 {% endblock %}
