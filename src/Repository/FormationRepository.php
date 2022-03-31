@@ -51,13 +51,11 @@ class FormationRepository extends ServiceEntityRepository
     
     public function findBykeyUp($keyup)
     {
-        return $this->createQueryBuilder('f')
+        $query = $this->createQueryBuilder('f')
             ->select('f')
-            ->andWhere('f.title IN (:title)')
-            ->setParameter('title', "%{$keyup}%")
-            ->getQuery()
-            ->getResult()
-        ;
+            ->andWhere('f.title LIKE :title')
+            ->setParameter('title', "%{$keyup}%");
+        return $query->getQuery()->getResult();
     }
 
 

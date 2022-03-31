@@ -9,6 +9,7 @@ use App\Entity\Lesson;
 use App\Entity\LessonCheck;
 use App\Entity\Section;
 use App\Repository\LessonCheckRepository;
+use App\Repository\FormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,25 +28,39 @@ class FormationController extends AbstractController
     #[Route('/formation', name: 'app_formation')]
     public function index(Request $request): Response
     {
-        $formations = $this->entityManager->getRepository(Formation::class)->findAll();
+        $keyup = $request->get('keyup');        
+        $formations = $this->entityManager->getRepository(Formation::class)->findBykeyUp($keyup);
         
+
         if ($request->get('ajax')) {
-            $keyup = $request->get('keyup');
-            $formations = $this->entityManager->getRepository(Formation::class)->findBykeyUp($keyup);
-            return $this->renderView('formation/index.html.twig', [
-                'formations' => $formations,
+            return new JsonResponse([
+                'content' => $this->renderView('formation/_content.html.twig', [
+                    'formations' => $formations,
+                ])
             ]);
-            // return new JsonResponse([          
-            //     'title' => 'rrr', 
-            //     'image' => 'tttt',
-            //     'explanation' => 'rtrtrtr'
-            //     // 'content' => $this->renderView('formation/index.html.twig', compact('formations'))
-            // ]);
-        } else {        
+        }
+        // if ($request->get('ajax')) {
+            //     $keyup = $request->get('keyup');
+            //     $formations = $this->entityManager->getRepository(Formation::class)->findBykeyUp($keyup);
+            //     return $this->json([
+                //         'message' => $formations->getTitle(), 
+                //         'code' => 403
+                //     ], 403);
+                //     // return $this->renderView('formation/index.html.twig', [
+                    //     //     'formations' => $formations,
+                    //     // ]);
+                    //     //  return new JsonResponse([          
+                        //     // 'content' => $this->renderView('formation/index.html.twig', [
+                            //     //     'formations' => $formations,
+                            //     // ])
+                            //     // ]);
+                            // }  
+        $formations = $this->entityManager->getRepository(Formation::class)->findAll();
+                            
         return $this->render('formation/index.html.twig', [
             'formations' => $formations,
         ]);
-        }
+        
     }
 
     #[Route('/suivre-formation/{slug}', name: 'formation')]

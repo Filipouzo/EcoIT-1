@@ -1,0 +1,26 @@
+
+        {% for formation in formations %}
+            <div class="col-md-4 formation-list">
+                <div class="text-center">
+                    <div class="formation-img">
+                        <img src="/assets/images/{{ formation.image }}" class="img-fluid search" alt="{{ formation.title }}">
+                    </div>
+                    <h2 class="formation-title search">{{ formation.title }}</h2>                    
+                    <div class="m-3 formation-description search">{{ formation.description }}</div>
+                    <a href="{{ path('formation', { 'slug': formation.slug }) }}" class="btn-formation float-end m-2">Suivre cette formation</a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for formation in formations %}
+            <div class="col-md-4 formation-list">
+                <div class="text-center">
+                    <div class="formation-img">
+                        <img src="/assets/images/{{ formation.image }}" class="img-fluid" alt="{{ formation.title }}">
+                    </div>
+                    <h2 class="formation-title">{{ formation.title }}</h2>                    
+                    <div class="m-3 formation-description">{{ formation.description }}</div>
+                    <a href="" class="btn-formation float-end m-2">Suivre cette formation</a>
+                </div>
+            </div>
+        {% endfor %}
+    
