@@ -41,15 +41,12 @@ window.onload = () => {
     })
 
     // Search Keyup
-    function searchKeyUp(search) {
+    function searchKeyUp() {
         
-        const searchKey = search.key;
         const searchUrl = window.location.href;
-        const searchImage = document.querySelector('img.search');
-        const searchTitle = document.querySelector('h2.search');
-        const searchDes = document.querySelector('div.search');
+        const input = document.querySelector('input.search').value;
 
-        fetch(searchUrl + "?keyup=" + searchKey + "&ajax=1", {
+        fetch(searchUrl + "?ajax=1" + "&value=" + input, {
             headers: {
                 "x-Requested-With": "XMLHttpRequest"
             }
@@ -59,24 +56,6 @@ window.onload = () => {
             content.innerHTML = data.content;
         })
         .catch(e => alert(e));
-        
-        // , {
-            // method: 'GET',
-            // headers: {
-            //   'Content-Type': 'application/json'
-            // }})
-            // .then(response => response.json())
-            // .then(data => {
-            //     searchTitle.innerHTML = data.title;
-            //     searchImage.src = data.image;
-            //     searchDes.innerHTML = data.explanation;
-            // })
-            // .catch(e => alert(e));            
-            // .then(function(data) {
-            //     searchTitle.textContent = data.searchTitle;
-            //     searchImage.src = data.searchImage;
-            //     searchDes.textContent = data.searchDes;
-            // });
     }
 
     const search = document.querySelector('input.search');

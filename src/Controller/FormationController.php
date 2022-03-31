@@ -28,33 +28,21 @@ class FormationController extends AbstractController
     #[Route('/formation', name: 'app_formation')]
     public function index(Request $request): Response
     {
-        $keyup = $request->get('keyup');        
+        // Search by keyup
+        $keyup = $request->get('value');
+        $keyup = strtolower($keyup);    
+        
         $formations = $this->entityManager->getRepository(Formation::class)->findBykeyUp($keyup);
         
-
-        if ($request->get('ajax')) {
+        if ($request->get('ajax')) {            
             return new JsonResponse([
                 'content' => $this->renderView('formation/_content.html.twig', [
                     'formations' => $formations,
                 ])
             ]);
         }
-        // if ($request->get('ajax')) {
-            //     $keyup = $request->get('keyup');
-            //     $formations = $this->entityManager->getRepository(Formation::class)->findBykeyUp($keyup);
-            //     return $this->json([
-                //         'message' => $formations->getTitle(), 
-                //         'code' => 403
-                //     ], 403);
-                //     // return $this->renderView('formation/index.html.twig', [
-                    //     //     'formations' => $formations,
-                    //     // ]);
-                    //     //  return new JsonResponse([          
-                        //     // 'content' => $this->renderView('formation/index.html.twig', [
-                            //     //     'formations' => $formations,
-                            //     // ])
-                            //     // ]);
-                            // }  
+
+        // Basic page
         $formations = $this->entityManager->getRepository(Formation::class)->findAll();
                             
         return $this->render('formation/index.html.twig', [
