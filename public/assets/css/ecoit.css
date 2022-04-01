@@ -117,7 +117,8 @@ header {
 
 main {
     background-color: #f1f1f1;
-    height: 85vh;
+    min-height: 85vh;
+    position: relative;
 }
 
 h1 {
@@ -250,13 +251,14 @@ p.title {
 
 /***** FOOTER *****/
 footer {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    margin-top: 21.5px;
     width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 7vh;
+    height: auto;
+    background-color: #333;
 }
 
 

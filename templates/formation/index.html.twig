@@ -10,10 +10,10 @@
                 <input class="search" type="text" placeholder="Votre recherche">
             </form>
         </div>
-        <div class="col">
+        <div id="filter" class="progress col">
             Formations en cours
         </div>
-        <div class="col">
+        <div id="filter" class="over col">
             Formations terminée
         </div>
     </div>
@@ -21,6 +21,6 @@
     {% include "formation/_content.html.twig" %}
     </div>
 {% endblock %}
-{% block js %}
-    <script src="{{ asset('assets/js/formation.js') }}"></script>
-{% endblock %}
+
+    
+
