@@ -10,8 +10,10 @@
             <ul>
                 <li><h2>{{ formation.title }}</h2></li>
                 <hr>
-                <li class="list-section"><h3>{{ section.title }}</h3></li>    
-                {% for lesson in lessons %}   
+                {% for section in sections %}
+                <li class="list-section"><h3>{{ section.title }}</h3></li>                   
+                {% for lesson in lessons %}
+                    {% if lesson.section.id is same as section.id %}
                     <li class="list-lesson">         
                         <a id="{{ lesson.id }}" href="{{ path('lesson_check', { 'slug': formation.slug, 'id' : lesson.id }) }}" class="js-check">
                         {% if app.user and lesson.isCheckedByUser(app.user) %}
@@ -24,7 +26,9 @@
                             {{ lesson.title }}
                         </a>
                     </li>
+                    {% endif %}
                 {% endfor %}
+                {% endfor %} 
             </ul>
         </div>
         <div class="col-1 separation">

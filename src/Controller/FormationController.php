@@ -63,11 +63,17 @@ class FormationController extends AbstractController
 
         // Find ID formation
         $id_formation = $formation->getId();
-        $section = $this->entityManager->getRepository(Section::class)->findOneByFormation($id_formation);
+        $sections = $this->entityManager->getRepository(Section::class)->findBy(['formation' => $id_formation]);
+        
+
+        $lessons = $this->entityManager->getRepository(Lesson::class)->findAll();
+        
+        // ANCIEN CODE
+        // $section = $this->entityManager->getRepository(Section::class)->findOneByFormation($id_formation);
 
         // Find ID section
-        $id_section = $section->getId();
-        $lessons = $this->entityManager->getRepository(Lesson::class)->findBy(['section' => $id_section]);
+        // $id_section = $section->getId();
+        // $lessons = $this->entityManager->getRepository(Lesson::class)->findBy(['section' => $id_section]);
 
         if (!$formation) {
             return $this->redirectToRoute('app_formation');
@@ -75,7 +81,7 @@ class FormationController extends AbstractController
 
         return $this->render('formation/show.html.twig', [
             'formation' => $formation,
-            'section' => $section,
+            'sections' => $sections,
             'lessons' => $lessons,
         ]);
     }
