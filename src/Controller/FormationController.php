@@ -28,7 +28,7 @@ class FormationController extends AbstractController
     #[Route('/formation', name: 'app_formation')]
     public function index(Request $request): Response
     {
-        // Search by keyup
+        // Search by keyup GET(AJAX=1)
         $keyup = $request->get('value');
         $keyup = strtolower($keyup);    
         
@@ -42,7 +42,7 @@ class FormationController extends AbstractController
             ]);
         }
 
-        // Basic page
+        // Basic page if GET(AJAX=0)
         $formations = $this->entityManager->getRepository(Formation::class)->findAll();
                             
         return $this->render('formation/index.html.twig', [
