@@ -249,6 +249,25 @@ p.title {
     margin-left: 0;
 }
 
+.separation {
+    border-right: 2px solid #333;
+    height: 100vh;
+    width: 10px;
+}
+
+.list-lesson {
+    border-right: 1px dashed #333;
+    border-bottom: 1px dashed #333;
+    padding: 3px;
+}
+
+.list-section {
+    border-right: 1px inset #333;
+    border-bottom: 1px inset #333;
+    text-transform: uppercase;
+    font-style: normal;
+}
+
 /***** FOOTER *****/
 footer {
     position: relative;

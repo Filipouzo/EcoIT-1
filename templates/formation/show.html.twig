@@ -9,9 +9,10 @@
         <div class="col-4">
             <ul>
                 <li><h2>{{ formation.title }}</h2></li>
-                <li><h3>{{ section.title }}</h3></li>    
+                <hr>
+                <li class="list-section"><h3>{{ section.title }}</h3></li>    
                 {% for lesson in lessons %}   
-                    <li>         
+                    <li class="list-lesson">         
                         <a id="{{ lesson.id }}" href="{{ path('lesson_check', { 'slug': formation.slug, 'id' : lesson.id }) }}" class="js-check">
                         {% if app.user and lesson.isCheckedByUser(app.user) %}
                             <img class="check{{ lesson.id }} icon-lesson" src="{{ asset('assets/images/check.png') }}" alt="check">
@@ -26,7 +27,9 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-8">
+        <div class="col-1 separation">
+        </div>        
+        <div class="col-7">
             <p class="title"></p>
             <div class="video"></div>
             <p class="explanation"></p>
